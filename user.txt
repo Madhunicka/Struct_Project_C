@@ -1,0 +1,69 @@
+Afshin
+Monopoly 5
+Risk 7
+TicTacToe 6
+Catan 8
+Pandemic 9
+Carcassonne 7
+TicketToRide 8
+Azul 6
+Splendor 7
+Chess 9
+Checkers 6
+
+Amritpal
+Monopoly 6
+Risk 5
+TicTacToe 7
+
+Lubna
+Pictonary 4
+Acquire 7
+Monopoly 8
+
+Mira
+Scrabble 10
+Catan 3
+Azul 9
+Splendor 8
+Dominion 7
+TerraformingMars 6
+PuertoRico 7
+PowerGrid 8
+7Wonders 9
+Agricola 8
+
+Peter
+Chess 8
+Checkers 9
+Backgammon 7
+
+Ralph
+Chess 8
+Checkers 9
+Dominion 7
+
+Sara
+Azul 7
+Pandemic 8
+Codenames 6
+
+Samira
+Catan 8
+Azul 9
+TicketToRide 7
+
+Noor
+Dominion 8
+Splendor 9
+TerraformingMars 7
+Monopoly 5
+
+Nushan
+Monopoly 6
+
+Kushan
+Monopoly 10
+
+Mala
+Monopoly 6
