@@ -2,10 +2,7 @@ Afshin
 Monopoly 5
 Risk 7
 TicTacToe 6
-Catan 8
-Pandemic 9
 Carcassonne 7
-TicketToRide 8
 Azul 6
 Splendor 7
 Chess 9
@@ -72,3 +69,6 @@ Tharaka
 Monopoly 5
 
 Kevin
+
+Sharan
+Tic-Tac-Toe 6

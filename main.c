@@ -105,6 +105,16 @@ int find_user_index(BoardGameRatings *boardGameRatings, const char *username) {
     return -1;
 }
 
+void search_games(User *user, const char *search_term, int *found_indices, int *found_count) {
+    *found_count = 0;
+    for (int i = 0; i < user->num_games; i++) {
+        if (strstr(user->games[i].name, search_term) != NULL) {
+            found_indices[(*found_count)++] = i;
+        }
+    }
+}
+
+
 void search_game(User *user);
 void remove_game(User *user);
 void print_user_games(User *user);
@@ -150,6 +160,7 @@ void print_user_games(User *user) {
         printf("    %-20s %8d\n", user->games[i].name, user->games[i].rating);
     }
 }
+
 
 void add_game_to_user(User *user) {
     while (user->num_games < MAX_GAMES_PER_USER) {
@@ -200,24 +211,24 @@ void search_game(User *user) {
         scanf("%s", search_term);
         if (strcmp(search_term, "q") == 0) break;
 
-        printf("\nSearch results:\n");
+        int found_indices[MAX_GAMES_PER_USER];
+        int found_count;
+        search_games(user, search_term, found_indices, &found_count);
 
-        int num_matches = 0;
-        for (int i = 0; i < user->num_games; i++) {
-            if (strstr(user->games[i].name, search_term) != NULL) {
-                printf("    %-20s %8d\n", user->games[i].name, user->games[i].rating);
-                num_matches++;
-            }
-        }
-
-        if (num_matches == 0) {
+        if (found_count == 0) {
             printf("No matching games found.\n");
         } else {
+            printf("\nSearch results:\n");
+            for (int i = 0; i < found_count; i++) {
+                printf("    %-20s %8d\n", user->games[found_indices[i]].name, user->games[found_indices[i]].rating);
+            }
             printf("Search complete. Use a more specific term to refine your search if needed.\n");
-            return;
         }
     }
 }
+
+
+
 
 void remove_game(User *user) {
     if (user->num_games == 0) {
@@ -232,12 +243,8 @@ void remove_game(User *user) {
         if (strcmp(search_term, "q") == 0) return;
 
         int found_indices[MAX_GAMES_PER_USER];
-        int found_count = 0;
-        for (int i = 0; i < user->num_games; i++) {
-            if (strstr(user->games[i].name, search_term) != NULL) {
-                found_indices[found_count++] = i;
-            }
-        }
+        int found_count;
+        search_games(user, search_term, found_indices, &found_count);
 
         if (found_count == 0) {
             printf("No matching board game found.\n");
@@ -254,7 +261,7 @@ void remove_game(User *user) {
                 user->num_games--;
                 printf("Game removed.\n");
 
-                // Ask if the user wants to remove another game
+               
                 printf("Do you want to remove another game (y/n): ");
                 scanf(" %c", &confirmation);
                 if (confirmation == 'n' || confirmation == 'N') {
@@ -269,51 +276,11 @@ void remove_game(User *user) {
             for (int i = 0; i < found_count; i++) {
                 printf("    %-20s %8d\n", user->games[found_indices[i]].name, user->games[found_indices[i]].rating);
             }
-
             printf("Please refine your search to specify which game to remove.\n");
-            printf("Search within these results (q to quit): ");
-            scanf("%s", search_term);
-            if (strcmp(search_term, "q") == 0) return;
-
-            int refined_found_indices[MAX_GAMES_PER_USER];
-            int refined_found_count = 0;
-            for (int i = 0; i < found_count; i++) {
-                if (strstr(user->games[found_indices[i]].name, search_term) != NULL) {
-                    refined_found_indices[refined_found_count++] = found_indices[i];
-                }
-            }
-
-            if (refined_found_count == 0) {
-                printf("No matching board game found.\n");
-            } else if (refined_found_count == 1) {
-                int found_index = refined_found_indices[0];
-                printf("%s: %d\n", user->games[found_index].name, user->games[found_index].rating);
-                printf("Do you want to remove this game (y/n): ");
-                char confirmation;
-                scanf(" %c", &confirmation);
-                if (confirmation == 'y' || confirmation == 'Y') {
-                    for (int i = found_index; i < user->num_games - 1; i++) {
-                        user->games[i] = user->games[i + 1];
-                    }
-                    user->num_games--;
-                    printf("Game removed.\n");
-
-                    // Ask if the user wants to remove another game
-                    printf("Do you want to remove another game (y/n): ");
-                    scanf(" %c", &confirmation);
-                    if (confirmation == 'n' || confirmation == 'N') {
-                        return;
-                    }
-                } else {
-                    printf("Removal cancelled.\n");
-                    return;
-                }
-            } else {
-                printf("Multiple matches found again. Please refine your search further.\n");
-            }
         }
     }
 }
+
 
 
 
